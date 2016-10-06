@@ -52,7 +52,7 @@ class CatsController < ApplicationController
 
   def require_ownership
     @cat = Cat.find(params[:id])
-    unless @cat.user_id == current_user.id
+    if current_user.nil? || @cat.user_id != current_user.id
       flash[:errors] = "You don't own this cat homie"
       redirect_to cats_url
     end
